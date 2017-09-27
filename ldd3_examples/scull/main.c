@@ -4,7 +4,7 @@
  * 此代码为ldd3例子，自己加了些注释;希望可以和更多有着同样兴趣的鸟儿们一块学习讨论。
  * 哪有注释的不对的地方请发mail给我，或留言；
  *
- * author : liyangth@gmail.com 
+ * author : who8023me@hotmail.com 
  *
  * date: 2007-2-7
  * 
