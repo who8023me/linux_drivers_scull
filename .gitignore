@@ -3,3 +3,6 @@
 *.ko
 *.ko.unsigned
 *.o.d
+*.cmd
+*.o
+*.mod.c
