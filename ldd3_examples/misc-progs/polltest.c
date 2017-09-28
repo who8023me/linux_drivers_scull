@@ -35,10 +35,13 @@ int main(int argc, char **argv)
     pfd.events = POLLIN;
 
     while (1) {
+	printf("now wait rto read\n");
         n=read(0, buffer, 4096);
         if (n >= 0)
             write(1, buffer, n);
+	printf("now will poll\n");
 	n = poll(&pfd, 1, -1);
+	printf("now poll return\n");
 	if (n < 0)
 	    break;
     }
