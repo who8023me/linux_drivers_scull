@@ -237,8 +237,10 @@ static unsigned int scull_p_poll(struct file *filp, poll_table *wait)
 	 * two are equal.
 	 */
 	down(&dev->sem);
+	printk(KERN_INFO "scullpipe now poll will wait\n");
 	poll_wait(filp, &dev->inq,  wait);
 	poll_wait(filp, &dev->outq, wait);
+	printk(KERN_INFO "scullpipe now poll wait return\n");
 	if (dev->rp != dev->wp)
 		mask |= POLLIN | POLLRDNORM;	/* readable */
 	if (spacefree(dev))
