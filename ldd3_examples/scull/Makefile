@@ -3,16 +3,15 @@
 #将这个开关打开，看proc的输出。在这个例子分别有二个用于输出的proc文件。一个是用老方法实现的
 #/proc/scullmem
 #新方法 /proc/scullseq
-DEBUG = y	
+DEBUG = y
 
 
 # Add your debugging flag (or not) to CFLAGS
 ifeq ($(DEBUG),y)
-  DEBFLAGS = -O -g -DSCULL_DEBUG # "-O" is needed to expand inlines
+  DEBFLAGS = -O -g -DSCULL_DEBUG
 else
-  DEBFLAGS = -O2
+  DEBFLAGS = -O2 -g
 endif
-
 EXTRA_CFLAGS += $(DEBFLAGS)
 EXTRA_CFLAGS += -I$(LDDINC)
 ifneq ($(KERNELRELEASE),)
@@ -28,7 +27,7 @@ KERNELDIR ?= /lib/modules/$(shell uname -r)/build
 PWD       := $(shell pwd)
 
 modules:
-	$(MAKE) -C $(KERNELDIR) M=$(PWD) LDDINC=$(PWD)/../include modules
+	$(MAKE) -C $(KERNELDIR)  M=$(PWD) LDDINC=$(PWD)/../include modules
 
 endif
 
