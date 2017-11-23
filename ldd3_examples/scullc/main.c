@@ -15,7 +15,7 @@
  * $Id: _main.c.in,v 1.21 2004/10/14 20:11:39 corbet Exp $
  */
 
-#include <linux/config.h>
+//#include <linux/config.h>
 #include <linux/module.h>
 #include <linux/moduleparam.h>
 #include <linux/init.h>
@@ -49,7 +49,7 @@ int scullc_trim(struct scullc_dev *dev);
 void scullc_cleanup(void);
 
 /* declare one cache pointer: use it for all devices */
-kmem_cache_t *scullc_cache;
+struct mem_cache *scullc_cache;
 
 
 
@@ -409,7 +409,7 @@ struct async_work {
  */
 static void scullc_do_deferred_op(void *p)
 {
-	struct async_work *stuff = (struct async_work *) p;
+	struct async_work *stuff = container_of(p, struct async_work, work);
 	aio_complete(stuff->iocb, stuff->result, 0);
 	kfree(stuff);
 }
@@ -437,7 +437,7 @@ static int scullc_defer_op(int write, struct kiocb *iocb, char __user *buf,
 		return result; /* No memory, just complete now */
 	stuff->iocb = iocb;
 	stuff->result = result;
-	INIT_WORK(&stuff->work, scullc_do_deferred_op, stuff);
+	INIT_WORK(&stuff->work, scullc_do_deferred_op);
 	schedule_delayed_work(&stuff->work, HZ/100);
 	return -EIOCBQUEUED;
 }
